@@ -1,0 +1,115 @@
+esphome:
+  name: cartridge-player
+  friendly_name: Cartridge Player
+  comment: "NFC based cartridge player from The Stock Pot"
+  project:
+    name: "The Stock Pot.Cartridge Player"
+    version: "1.0.2"
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+logger:
+
+api:
+
+ota:
+  platform: esphome
+
+wifi:
+  ssid: "wifi_ssid"
+  password: "wifi_password"
+
+  ap:
+    ssid: "Cartridge Player Hotspot"
+    password: "thestockpot"
+
+captive_portal:
+
+# SPI connection for RC522
+spi:
+  clk_pin: GPIO12
+  mosi_pin: GPIO11
+  miso_pin: GPIO10
+
+# Global to track last tag detection time (for debounce)
+globals:
+  - id: last_tag_time
+    type: unsigned long
+    restore_value: no
+    initial_value: '0'
+
+# Buzzer on GPIO3
+output:
+  - platform: gpio
+    pin: GPIO2
+    id: buzzer_output
+
+# Button to manually trigger a beep
+button:
+  - platform: template
+    name: "Cartridge Player Beep"
+    id: buzzer_button
+    on_press:
+      then:
+        - output.turn_on: buzzer_output
+        - delay: 100ms
+        - output.turn_off: buzzer_output
+
+# RC522 SPI Reader
+rc522_spi:
+  id: rc522_reader
+  cs_pin: GPIO13
+  update_interval: 250ms
+
+  on_tag:
+    then:
+      - lambda: |-
+          id(last_tag_time) = millis();
+      - logger.log:
+          format: "Cartridge detected: %s"
+          args: ['x.c_str()']
+      - text_sensor.template.publish:
+          id: last_uid
+          state: !lambda 'return x;'
+      - binary_sensor.template.publish:
+          id: tag_present
+          state: true
+      - homeassistant.event:
+          event: esphome.nfc_card_inserted
+          data:
+            uid: !lambda 'return x;'
+
+  on_tag_removed:
+    then:
+      - delay: 500ms
+      - lambda: |-
+          if (millis() - id(last_tag_time) > 500) {
+            ESP_LOGI("rfid", "Cartridge removed (debounced)");
+            id(last_uid).publish_state("");
+            id(tag_present).publish_state(false);
+          }
+      - if:
+          condition:
+            lambda: 'return millis() - id(last_tag_time) > 500;'
+          then:
+            - homeassistant.event:
+                event: esphome.nfc_card_removed
+                data:
+                  message: "Cartridge removed"
+
+# Current Tag UID
+text_sensor:
+  - platform: template
+    name: "Cartridge ID"
+    id: last_uid
+    update_interval: never
+    internal: false
+
+# Whether a cartridge is inserted
+binary_sensor:
+  - platform: template
+    name: "Cartridge Present"
+    id: tag_present
