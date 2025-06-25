@@ -16,6 +16,7 @@ Everything you need to build **The Everything Remote**.
 | Hookup Wire                     | 1   |           | Hookup wire - 6 x 50mm lengths                                       |
 | M3 x 10mm countersunk machine screws  | 2   |  | Part of M2 screw assortments — handy to have.                                       |
 | M3 x 10mm cap head screws (pan head is ok too)  | 4   |  | Also from typical M2 screw kits.                                                    |
+| 10-13mm rubber feet  | 4   |  | Standard rubber furniture feet. Available at hardware stores / online                                                    |
 
 ---
 
