@@ -1,1 +1,2 @@
-# NFC_Cartridge_Player
+# NFC Cartridge Player Project
+## The Stock Pot
