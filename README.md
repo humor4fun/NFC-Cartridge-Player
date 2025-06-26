@@ -1,6 +1,6 @@
 # 🎞️ NFC Cartridge Media Player
 
-![Cartridge Player](Pictures/Cartridge_Player_1.jpg)
+![Cartridge Player](Pictures/Cartridge_Player_3.jpg)
 
 Bring back the magic of movie night — without the rewinding.
 
