@@ -13,7 +13,7 @@ Whether you're a fan of VHS-era rituals or just want a fun new way to launch aut
 ## 🔗 Quick Links
 
 - 🔽 **[Latest Release](https://github.com/TheStockPot/NFC-Cartridge-Player/releases/latest)**  
-- 📖 **[Blog Post](https://www.thestockpot.net/projects/nfc-cartridge-player)**  
+- 📖 **[Blog Post](https://www.thestockpot.net/videos/cartrdgeplayer)**  
 - 📦 **[Bill of Materials](https://github.com/TheStockPot/NFC-Cartridge-Player/blob/TheStockPot-VideoRelease/BOM.md)**  
 - 🖨️ **[3D Print Files](https://www.printables.com/model/1337649-esphome-cartridge-player)**  
 - 🧠 **[ESPHome Config](https://github.com/TheStockPot/NFC-Cartridge-Player/blob/TheStockPot-VideoRelease/esphome/cartridge_player.yaml)**  
