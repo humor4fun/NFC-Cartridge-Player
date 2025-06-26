@@ -1,0 +1,116 @@
+alias: Cartridge Player - Example
+description: Example of Cartridge Player automation. Selects media based on NFC tag ID
+triggers:
+  - entity_id:
+      - binary_sensor.cartridge_player_cartridge_present
+    to: "on"
+    trigger: state
+    from: "off"
+conditions: []
+actions:
+  - type: turn_on
+    device_id: 1b8e58b62f5652f04a066bcc934fe97a
+    entity_id: fe56e424ecf2d14ec70c54737a1a7c27
+    domain: remote
+    enabled: true
+    alias: Turn On TV
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - data:
+      media_content_type: app
+      media_content_id: com.plexapp.android
+    action: media_player.play_media
+    target:
+      device_id: 1b8e58b62f5652f04a066bcc934fe97a
+    enabled: true
+    alias: Open Plex App
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - alias: Card -> Media Mapping
+    choose:
+      - conditions:
+          - condition: state
+            entity_id: sensor.cartridge_player_cartridge_id
+            state: 04-A3-B8-8B-32-02-89
+            enabled: true
+        sequence:
+          - alias: Play Jurassic Park
+            data:
+              media_content_type: movie
+              media_content_id: "{ \"library_name\": \"Films\", \"title\": \"Jurassic Park\")"
+            action: media_player.play_media
+            enabled: true
+            target:
+              device_id: 33a8121657b60dcbfa8b7eb13978fddb
+          - device_id: de99af80a72b515e00629207c01c64ad
+            domain: button
+            entity_id: d87d4f270cde726c546e17142aef0ac5
+            type: press
+            alias: Beep
+        alias: Jurassic Park
+      - conditions:
+          - condition: state
+            entity_id: sensor.cartridge_player_cartridge_id
+            state: 04-01-4D-26-2A-02-89
+            enabled: true
+        sequence:
+          - alias: The Office
+            data:
+              media_content_type: EPISODE
+              media_content_id: >-
+                { "library_name": "TV Shows", "show_name": "The Office (US)",
+                "resume": 1, "maxresults": 1, "episode.unwatched": true }
+            action: media_player.play_media
+            enabled: true
+            target:
+              device_id: 33a8121657b60dcbfa8b7eb13978fddb
+          - device_id: de99af80a72b515e00629207c01c64ad
+            domain: button
+            entity_id: d87d4f270cde726c546e17142aef0ac5
+            type: press
+            alias: Beep
+        alias: The Office
+      - conditions:
+          - condition: state
+            entity_id: sensor.cartridge_player_cartridge_id
+            state: 04-93-9B-E9-32-02-89
+            enabled: true
+        sequence:
+          - alias: Movie / Media
+            data:
+              media_content_type: url
+              media_content_id: https://www.youtube.com/playlist?list=PL9Iupd27e1SQ9cu-dCzwLEf7dQztk8ti_
+            action: media_player.play_media
+            enabled: true
+            target:
+              device_id: 33a8121657b60dcbfa8b7eb13978fddb
+          - device_id: de99af80a72b515e00629207c01c64ad
+            domain: button
+            entity_id: d87d4f270cde726c546e17142aef0ac5
+            type: press
+            alias: Beep
+        alias: The Stock Pot
+    enabled: true
+  - wait_for_trigger:
+      - type: turned_off
+        device_id: de99af80a72b515e00629207c01c64ad
+        entity_id: b1ecf066b09fc13ddcbe238de70fcfb7
+        domain: binary_sensor
+        trigger: device
+        for:
+          hours: 0
+          minutes: 0
+          seconds: 1
+    alias: Wait for cartridge removed
+  - action: media_player.media_stop
+    metadata: {}
+    data: {}
+    target:
+      device_id: 1b8e58b62f5652f04a066bcc934fe97a
+mode: single
