@@ -1,5 +1,7 @@
 # 🎞️ NFC Cartridge Media Player
 
+![Cartridge Player](Pictures/Cartridge_Player_1.jpg)
+
 Bring back the magic of movie night — without the rewinding.
 
 This ESPHome-powered cartridge player uses NFC tags and Home Assistant to recreate the nostalgia of physical media. Insert a cartridge, and your smart home takes care of the rest: turning on the TV, playing a movie, dimming the lights — whatever you like.
