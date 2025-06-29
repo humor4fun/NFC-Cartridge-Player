@@ -1,6 +1,6 @@
-# Everything Remote – Bill of Materials
+# NFC Cartridge Player – Bill of Materials
 
-Everything you need to build **The Everything Remote**.
+Everything you need to build **The NFC Cartridge Player**.
 
 ---
 
