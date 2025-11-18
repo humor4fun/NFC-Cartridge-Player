@@ -1,13 +1,14 @@
 esphome:
-  name: cartridge-player-c3
+  name: cartridge-player
   friendly_name: Cartridge Player
-  comment: "NFC based cartridge player from The Stock Pot"
+  name_add_mac_suffix: true
+  comment: "NFC based cartridge player from The Stock Pot [C3 Zero version]"
   project:
     name: "The Stock Pot.Cartridge Player"
-    version: "1.0.2"
+    version: "1.0.3"
 
 esp32:
-  board: esp32-c3-devkitm-1
+  variant: ESP32C3
   framework:
     type: arduino
 
@@ -21,6 +22,8 @@ ota:
 wifi:
   ssid: "wifi_ssid"
   password: "wifi_password"
+  power_save_mode: NONE
+
 
   ap:
     ssid: "Cartridge Player Hotspot"
